@@ -1,0 +1,67 @@
+KNN Modeling
+> # The very first step is to load and extract Winde data from the tinyurl datasets below in R using this command
+> white <- read.csv("https://tinyurl.com/winedata1", sep = ";")
+> red <- read.csv("https://tinyurl.com/winedata2", sep = ";")
+> 
+> # We then proceed to add a new variable, named type to distinguish white and Red wine
+> white$type <- "white"
+> red$type <- "red"
+> 
+> # We merge the datasets white and red using rbind. This combines the information for both
+> wine <- rbind(white, red)
+> 
+> # The next step is to change the type variable to a factor, this is a Categorical Variable type in R for classification purposes
+> wine$type <- factor(wine$type)
+> # We then install and load two libraries, caret and MLeval, which are used for machine learning tasks and model evaluation
+> #install.packages('caret', dependencies = TRUE)this was taken out to avoid error after second run
+> library(caret)
+> #install.packages('MLeval', dependencies = TRUE)this was taken out to avoid error after second run
+> library(MLeval)
+> #loaded lattice andd ggplot as it was requested.
+> library(lattice)
+> library(ggplot2)
+> install.packages
+function (...) 
+.rs.callAs(name, hook, original, ...)
+<environment: 0x000002162cd94a98>
+> fit_ctrl_Wine_WR <- trainControl(method = "repeatedcv",
++                                  number = 10, 
++                                  classProbs = TRUE,
++                                  summaryFunction = twoClassSummary,
++                                  savePredictions = TRUE)
+> fitted_model_Wine_WR <- train(type ~ pH + alcohol + fixed.acidity + residual.sugar,
++                               data = wine,
++                               trControl = fit_Control,
++                               method = "knn",
++                               metric = "ROC",
++                               tuneLength = 30,
++                               preProcess = c("center","scale"))
+> plot(fitted_model_Wine_WR)
+Figure 1
+AUC with K Values for wine Data
+ 
+The ROC achieves its peak value of 0.968 within the range of K values between 26 and 30. If the K value is reduced below this range, it may lead to overfitting of the data, while increasing the K value could result in underfitting.
+plots <-evalm(fitted_model,gnames="kNN", plots='r')
+ 
+KNN AUC -ROC IS 0.97, see image attached.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 2
+ROC Curve for KNN Model
+ 
+# Here we aim to extract detailed optimization results and ROC curve data from the evaluation, specifically targeting the 13th set of results and overall, ROC metrics for deeper insights into the model's performance.
+> plots$optres[[1]][13,]
+        Score        CI
+AUC-ROC  0.97 0.97-0.97
+> plots$roc
