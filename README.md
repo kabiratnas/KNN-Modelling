@@ -5,3 +5,4 @@ AUC with K Values for wine Data
 Figure 2
 ROC Curve for KNN Model
 ![image](https://github.com/kabiratnas/KNN-Modelling/assets/153971340/2c2d1be3-d7e1-45a0-9f99-e7f93bc19638)
+![image](https://github.com/kabiratnas/KNN-Modelling/assets/153971340/aafedb54-6299-4c16-a448-3354c71b5dfa)
